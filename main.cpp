@@ -1,46 +1,19 @@
-#include "utility.hpp"
-
-vehicleType::vehicleType(const string nameFp, const double cruiseSpeedMphFp,
-                         const double batteryCapacityKwhFp,
-                         const double timeToChargeHrsFp,
-                         const double energyUseAtCruiseKwhMileFp,
-                         const uint32_t passengerCountFp,
-                         const double probabilityOfFaultPerHrFp)
-    : name(nameFp), cruiseSpeedMph(cruiseSpeedMphFp),
-      batteryCapacityKwh(batteryCapacityKwhFp),
-      timeToChargeHrs(timeToChargeHrsFp),
-      energyUseAtCruiseKwhMile(energyUseAtCruiseKwhMileFp),
-      passengerCount(passengerCountFp),
-      probabilityOfFaultPerHr(probabilityOfFaultPerHrFp),
-      singleChargeMaxRangeMiles(batteryCapacityKwh / energyUseAtCruiseKwhMile),
-      singleChargeMaxFlightTimeInHrs(singleChargeMaxRangeMiles /
-                                     cruiseSpeedMph),
-      cruisePowerKw(batteryCapacityKwh / singleChargeMaxFlightTimeInHrs){};
-
-void vehicleType::display() const {
-  cout << "Given parameters:\n";
-  cout << "Company Name: " << name << "\n";
-  cout << "Cruise Speed (mph): " << cruiseSpeedMph << "\n";
-  cout << "Battery Capacity (kWh): " << batteryCapacityKwh << "\n";
-  cout << "Time to Charge (hours): " << timeToChargeHrs << "\n";
-  cout << "Energy use at Cruise (kWh/mile): " << energyUseAtCruiseKwhMile
-       << "\n";
-  cout << "Passenger Count: " << passengerCount << "\n";
-  cout << "Probability of fault per hour: " << probabilityOfFaultPerHr << "\n";
-  cout << "Hidden parameters:\n";
-  cout << "Max Range in Single Charge (miles): " << singleChargeMaxRangeMiles
-       << "\n";
-  cout << "Max Flight time in Single Charge (hours): "
-       << singleChargeMaxFlightTimeInHrs << "\n";
-  cout << "Cruise Power (kW): " << cruisePowerKw << "\n";
-};
-
-vehicle::vehicle(vehicleType *vTypeFp) : vType(vTypeFp) {
-  // starting with full capacity
-  data.currentBatteryChargeInKwh = vType->batteryCapacityKwh;
-}
+#include "vehicle_info.hpp"
+#include "vehicle_simulation.hpp"
 
 int main() {
-  cout << "Dummy\n";
+  cout << "STARTING SIMULATION\n\n";
+
+  simulation simulationL;
+  simulationL.insertVehicleType({"Alpha", 120, 320, 0.6, 1.6, 4, 0.25});
+  simulationL.insertVehicleType({"Bravo", 100, 100, 0.2, 1.5, 5, 0.10});
+  simulationL.insertVehicleType({"Charlie", 160, 220, 0.8, 2.2, 3, 0.05});
+  simulationL.insertVehicleType({"Delta", 90, 120, 0.62, 0.8, 2, 0.22});
+  simulationL.insertVehicleType({"Echo", 30, 150, 0.3, 5.8, 2, 0.61});
+  simulationL.listVehicleData();
+
+  simulationL.distributeVehiclePool();
+  simulationL.listVehiclePool();
+
   return 42;
 }

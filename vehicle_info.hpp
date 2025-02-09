@@ -1,12 +1,9 @@
+#pragma once
+
 #include <cstdint>
 #include <iostream>
 
 using namespace std;
-
-const uint32_t MAX_NUMBER_OF_VEHICLE = 20;
-const uint32_t MAX_NUMBER_OF_CHARGERS = 3;
-const double TOTAL_SIMULATION_IN_HRS = 3.0;
-const double SIMULATION_STEP_SIZE_IN_HRS = 1.0 / 3600.0;
 
 // Vehicle state machine
 enum class vehicleState {
