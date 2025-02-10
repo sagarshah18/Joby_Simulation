@@ -1,42 +1,54 @@
 #pragma once
 
 #include "vehicle_info.hpp"
+#include <atomic>
+#include <mutex>
 #include <random>
+#include <semaphore>
+#include <thread>
 #include <unordered_set>
 #include <vector>
 
-class simulation {
+class Simulation {
 private:
-  vector<vehicleType> vehicleTypes;
-  vector<vehicle> vehicles;
+  vector<VehicleType> vehicleTypes;
+  vector<Vehicle> vehicles;
   unordered_set<string> vehicleCompanyNames;
 
-  // TODO: we can make this user friendly by adding this via command line input
-  const uint32_t MAX_NUMBER_OF_CHARGERS = 3;
-  const uint32_t MAX_NUMBER_OF_VEHICLE = 20;
-  const double TOTAL_SIMULATION_IN_HRS = 3.0;
-  const double SIMULATION_STEP_SIZE_IN_HRS = 1.0 / 3600.0;
-  const uint32_t NUMBER_OF_STEPS =
-      uint32_t(TOTAL_SIMULATION_IN_HRS / SIMULATION_STEP_SIZE_IN_HRS);
-
-  uint32_t numberOfChargerAvailable;
+  const uint32_t maxChargers;
+  const uint32_t maxVehicles;
+  const double totalSimulationHrs;
+  const double simulationStepSize;
+  const double simulationStepSizeHrs;
+  const uint32_t totalSteps;
 
   // random number generation logic
-  random_device randomDevice;
-  mt19937 generator{randomDevice()};
-  uniform_real_distribution<double> doubleDistribution{0.0, 1.0};
+  random_device rD;
+  mt19937 generator;
+  uniform_real_distribution<double> doubleDistribution;
 
-  void faultCheck(vehicle &vehicle);
-  void charge(vehicle &vehicle);
-  void step(vehicle &vehicle);
+  counting_semaphore<> chargerSemaphore;
+  vector<thread> operationThreadPool;
+  mutex chargerLock;
+
+  void faultCheck(Vehicle &v);
+  void chargerStation(Vehicle &v);
+  void vehicleOperation(Vehicle &v);
+  void calculateIndividualVehicleData();
+  void calculateAvglVehicleData();
+  void handleFlyingState(Vehicle &v);
+  void handleQueueState(Vehicle &v);
+  void handleChargingState(Vehicle &v);
 
 public:
-  simulation() {}
+  Simulation(const uint32_t maxChargers, const uint32_t maxVehicles,
+             const double totalSimulationHrs,
+             const double simulationStepSizeHrs);
 
-  bool insertVehicleType(vehicleType vehicleTypeFp);
+  bool insertVehicleType(const VehicleType &vT);
   void distributeVehiclePool();
-  void listVehicleData();
-  void listVehiclePool();
+  void listVehicleData() const;
+  void listVehiclePool() const;
   void startSimulation();
-  void listResult();
+  void listResult() const;
 };

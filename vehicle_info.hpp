@@ -6,13 +6,13 @@
 using namespace std;
 
 // Vehicle state machine
-enum class vehicleState {
+enum class VehicleState {
   FLYING = 0,
   IN_QUEUE_FOR_CHARGER,
   CHARGING,
 };
 
-struct totalVehicleData {
+struct TotalVehicleData {
   double chargeTimeHrs = 0;
   double timeInWaitHrs = 0;
   uint32_t numberOfCharges = 0;
@@ -22,14 +22,14 @@ struct totalVehicleData {
   double distanceInMiles = 0;
   uint32_t totalFaultsOccured = 0;
 
-  vehicleState currentState = vehicleState::FLYING;
-  vehicleState lastState = vehicleState::CHARGING;
+  VehicleState currentState = VehicleState::FLYING;
+  VehicleState lastState = VehicleState::CHARGING;
 
   double currentBatteryChargeInKwh;
 };
 
 // Individual structures used for each vehicle
-struct individualVehicleData {
+struct IndividualVehicleData {
   // Given tracking for each vehicle type
   double avgFlightTimePerFlight = 0;
   double avgDistanceTraveledPerFlight = 0;
@@ -39,8 +39,8 @@ struct individualVehicleData {
 
   // supporting variables
   double totalChargeTimeHrs = 0;
-  double totalTimeInWaitHrs = 0;
   uint32_t totalNumberOfCharges = 0;
+  double totalTimeInWaitHrs = 0;
   uint32_t totalNumberOfWaitings = 0;
   double totalFlightDurationHrs = 0;
   uint32_t totalNumberOfFlights = 0;
@@ -48,7 +48,7 @@ struct individualVehicleData {
   uint32_t totalVehicleUsedInPool = 0;
 };
 
-struct vehicleType {
+struct VehicleType {
   // Given parameters
   const string name;
   const double cruiseSpeedMph;
@@ -58,9 +58,9 @@ struct vehicleType {
   const uint32_t passengerCount;
   const double probabilityOfFaultPerHr;
 
-  individualVehicleData vehicleData;
+  IndividualVehicleData vehicleData;
 
-  vehicleType(const string nameFp, const double cruiseSpeedMphFp,
+  VehicleType(const string nameFp, const double cruiseSpeedMphFp,
               const double batteryCapacityKwhFp, const double timeToChargeHrsFp,
               const double energyUseAtCruiseKwhMileFp,
               const uint32_t passengerCountFp,
@@ -70,12 +70,15 @@ struct vehicleType {
   const double singleChargeMaxRangeMiles;
   const double singleChargeMaxFlightTimeInHrs;
   const double cruisePowerKw;
+  double currentRideMiles;
+  double currentRideEnergyUsageKwh;
+  double currentSessionChargeEnergyKwh;
 
   void display() const;
 };
 
-struct vehicle {
-  vehicle(vehicleType *vTypeFp);
-  vehicleType *vType;
-  totalVehicleData data;
+struct Vehicle {
+  Vehicle(VehicleType &vTypeFp);
+  VehicleType &vType;
+  TotalVehicleData data;
 };
