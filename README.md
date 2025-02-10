@@ -40,3 +40,7 @@ This simulation provides a robust framework for analyzing the performance of dif
 1. Press Ctrl + Shift + P and type "cmake"
 2. Select "CMake: Build" from menu (You can also do this with F7)
 3. "vehicleSimulator.exe" will be available under "project directory/build/debug"
+
+## Unit Testing
+1. Using googleTest as submodule to provide unit tests
+2. Adding basic tests to handle core functions
