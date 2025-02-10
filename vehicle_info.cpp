@@ -11,11 +11,7 @@ VehicleType::VehicleType(const string nameFp, const double cruiseSpeedMphFp,
       timeToChargeHrs(timeToChargeHrsFp),
       energyUseAtCruiseKwhMile(energyUseAtCruiseKwhMileFp),
       passengerCount(passengerCountFp),
-      probabilityOfFaultPerHr(probabilityOfFaultPerHrFp),
-      singleChargeMaxRangeMiles(batteryCapacityKwh / energyUseAtCruiseKwhMile),
-      singleChargeMaxFlightTimeInHrs(singleChargeMaxRangeMiles /
-                                     cruiseSpeedMph),
-      cruisePowerKw(batteryCapacityKwh / singleChargeMaxFlightTimeInHrs){};
+      probabilityOfFaultPerHr(probabilityOfFaultPerHrFp){};
 
 void VehicleType::display() const {
   cout << "***************************************************************"

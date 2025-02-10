@@ -67,9 +67,6 @@ struct VehicleType {
               const double probabilityOfFaultPerHrFp);
 
   // Hidden parameters
-  const double singleChargeMaxRangeMiles;
-  const double singleChargeMaxFlightTimeInHrs;
-  const double cruisePowerKw;
   double currentRideMiles;
   double currentRideEnergyUsageKwh;
   double currentSessionChargeEnergyKwh;

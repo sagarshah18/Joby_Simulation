@@ -8,30 +8,30 @@ int main() {
   double totalSimulationHrs, simulationStepSize;
 
   // Prompt user for simulation parameters
-  cout << "Enter the number of vehicles: ";
+  cout << "Enter the number of vehicles (1-50): ";
   cin >> maxVehicles;
-  if (maxVehicles <= 0) {
+  if (maxVehicles <= 0 || maxVehicles > 50) {
     cout << "Invalid input for number of vehicles. Exiting simulation.\n";
     return 1;
   }
 
-  cout << "Enter the number of chargers: ";
+  cout << "Enter the number of chargers (1-10): ";
   cin >> maxChargers;
-  if (maxChargers <= 0) {
+  if (maxChargers <= 0 || maxChargers > 10) {
     cout << "Invalid input for number of chargers. Exiting simulation.\n";
     return 1;
   }
 
-  cout << "Enter the maximum simulation time: ";
+  cout << "Enter the maximum simulation time (in hours, 1-24): ";
   cin >> totalSimulationHrs;
-  if (totalSimulationHrs <= 0) {
+  if (totalSimulationHrs <= 0 || totalSimulationHrs > 24) {
     cout << "Invalid input for total simulation hours. Exiting simulation.\n";
     return 1;
   }
 
-  cout << "Enter the step size for simulation: ";
+  cout << "Enter the step size for simulation (in seconds, 1-3600): ";
   cin >> simulationStepSize;
-  if (simulationStepSize <= 0) {
+  if (simulationStepSize <= 0 || simulationStepSize > 3600) {
     cout << "Invalid input for simulation step size. Exiting simulation.\n";
     return 1;
   }
@@ -51,5 +51,5 @@ int main() {
   simulation.startSimulation();
   simulation.listResult();
 
-  return 42;
+  return 0;
 }
