@@ -5,26 +5,34 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
+set(TEST_DIR
+	${CMAKE_CURRENT_LIST_DIR}/test
+)
+
+set(SRC_DIR
+	${CMAKE_CURRENT_LIST_DIR}/src
+)
+
 enable_testing() #to  discover tests in test explorer 
 add_subdirectory(googletest) # add googletest subdirectory
 include_directories(googletest/include) # this is so we can #include <gtest/gtest.h>
 
 # Main project files
 add_library(vehicle_info 
-  vehicle_info.cpp
-  vehicle_info.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/vehicle_info.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/vehicle_info.hpp
 )
 
 add_library(vehicle_simulation 
-  vehicle_simulation.cpp
-  vehicle_simulation.hpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/vehicle_simulation.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/vehicle_simulation.hpp
 )
 
 # Test executable
 add_executable(vehicle_simulation_tests
-  test.cpp  # Your test file
-  vehicle_info.cpp
-  vehicle_simulation.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/test/test.cpp  # Your test file
+    ${CMAKE_CURRENT_LIST_DIR}/src/vehicle_info.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/src/vehicle_simulation.cpp
 )
 
 # Link libraries for tests
@@ -42,4 +50,7 @@ add_test(
   COMMAND vehicle_simulation_tests
 )
 
-add_executable(vehicleSimulator main.cpp vehicle_info.cpp vehicle_simulation.cpp)
+add_executable(vehicleSimulator 
+    ${CMAKE_CURRENT_LIST_DIR}/src/main.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/src/vehicle_info.cpp 
+    ${CMAKE_CURRENT_LIST_DIR}/src/vehicle_simulation.cpp)

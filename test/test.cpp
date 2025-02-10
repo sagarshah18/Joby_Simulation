@@ -1,6 +1,6 @@
 // vehicle_simulation_test.cpp
-#include "vehicle_info.hpp"
-#include "vehicle_simulation.hpp"
+#include "../src/vehicle_info.hpp"
+#include "../src/vehicle_simulation.hpp"
 #include <gtest/gtest.h>
 
 // Test VehicleType initialization
